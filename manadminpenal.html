@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login & Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
+    body {
+      background: #f0f0f0;
+    }
+
+    /* Hide both sections initially */
+    #loginPage, #dashboardPage {
+      display: none;
+    }
+
+    /* LOGIN PAGE */
+    .login-container {
+      max-width: 320px;
+      margin: 100px auto;
+      background: #fff;
+      padding: 30px;
+      box-shadow: 0 0 10px #ccc;
+      border-radius: 10px;
+    }
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .login-container p {
+      text-align: center;
+      color: red;
+      margin-top: 10px;
+    }
+
+    /* DASHBOARD PAGE */
+    .dashboard {
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #333;
+      color: white;
+      padding: 20px;
+      flex-shrink: 0;
+    }
+
+    .sidebar h3 {
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      background: #fff;
+      overflow-y: auto;
+    }
+
+    .logout-btn {
+      margin-top: 20px;
+      display: inline-block;
+      background: #dc3545;
+      padding: 8px 15px;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Page -->
+  <div class="login-container" id="loginPage">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <p id="errorMsg"></p>
+  </div>
+
+  <!-- Dashboard Page -->
+  <div class="dashboard" id="dashboardPage">
+    <div class="sidebar">
+      <h3>Admin Panel</h3>
+      <ul>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="E:\CALINT WEBSITE\data website\my ecom new\page penal.html"> page contotols</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a class="logout-btn" onclick="logout()">Logout</a></li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <h1>Welcome to Dashboard</h1>
+      <p>You are logged in as <span id="userType"></span>.</p>
+    </div>
+  </div>
+
+  <script>
+    const allowedUsers = [
+      { username: "admin", password: "admin123", type: "Admin" },
+      { username: "employee", password: "emp123", type: "Employee" }
+    ];
+
+    const loginForm = document.getElementById("loginForm");
+    const loginPage = document.getElementById("loginPage");
+    const dashboardPage = document.getElementById("dashboardPage");
+    const errorMsg = document.getElementById("errorMsg");
+    const userType = document.getElementById("userType");
+
+    function showDashboard(type) {
+      loginPage.style.display = "none";
+      dashboardPage.style.display = "flex";
+      userType.textContent = type;
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedIn");
+      localStorage.removeItem("userType");
+      location.reload();
+    }
+
+    function checkLogin() {
+      const loggedIn = localStorage.getItem("loggedIn");
+      const type = localStorage.getItem("userType");
+      if (loggedIn === "true" && type) {
+        showDashboard(type);
+      } else {
+        loginPage.style.display = "block";
+      }
+    }
+
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const user = allowedUsers.find(
+        u => u.username === username && u.password === password
+      );
+      if (user) {
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("userType", user.type);
+        showDashboard(user.type);
+      } else {
+        errorMsg.textContent = "Invalid credentials!";
+      }
+    });
+
+    checkLogin();
+  </script>
+
+</body>
+</html>
