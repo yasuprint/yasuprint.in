@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f4f4f4; }
+        .admin-container { display: flex; }
+        .sidebar { width: 250px; background: #2c3e50; height: 100vh; color: white; padding-top: 20px; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar ul li { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.2); }
+
+        /* ✅ Links का कलर व्हाइट रखने के लिए */
+        .sidebar ul li a { 
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px; /* आइकन और टेक्स्ट के बीच गैप */
+            width: 100%;
+        }
+        .sidebar ul li:hover { background: #34495e; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="sidebar">
+            <h2 style="text-align:center;">Admin Panel</h2>
+            <ul>
+                <li><a href="#" onclick="loadPage('dashboard')"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="file:///E:/MY%20DATA%20COCHING/all%20%20penal/emlpoy%20mangemnt.html" onclick="loadPage('users')"><i class="fas fa-users"></i>Users time work</a></li>
+                <li><a href="#" onclick="loadPage('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+
+                <!-- ✅ Add Order Link -->
+                <li>
+                    <a href="mugsordepenal.html">
+                        <i class="fas fa-shopping-cart"></i> mug Orders
+                    </a>
+                </li>
+
+                <!-- ✅ Payment Add Link -->
+                <li>
+                    <a href="file:///E:/MY%20DATA%20COCHING/all%20%20penal/payment%20aadmin%20penal.html">
+                        <i class="fas fa-money-bill-wave"></i> Payment paenal
+                    </a>
+                </li>
+
+                <!-- ✅ Customer Cancel Panel -->
+                <li>
+                    <a href="E:\MY DATA COCHING\all  penal\canecal order penal.html">
+                        <i class="fas fa-ban"></i> Customer Cancel
+                    </a>
+                </li>
+
+                <!-- ✅ Employee Task Panel -->
+                <li>
+                    <a href="file:///E:/MY%20DATA%20COCHING/all%20%20penal/aatendce%20index%20penal.html">
+                        <i class="fas fa-clipboard-list"></i> Employee attendance
+                    </a>
+                </li>
+
+                <li>
+                    <a href="polotshirtordercheck.html">
+                        <i class="fas fa-clipboard-list"></i>t shirt order penal
+                    </a>
+                </li>
+ <!-- ✅ Employee aatendce penal -->
+ <li>
+    <a href="E:\MY DATA COCHING\all  penal\aatendce panl uesrs.html">
+        <i class="fas fa-clipboard-list"></i> Employee attendance penal
+    </a>
+</li>
+
+                <!-- ✅ Logout -->
+                <li>
+                    <a href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="content" id="content-area">
+            <h3>Welcome to Admin Panel</h3>
+            <p>Select an option from the menu.</p>
+        </div>
+    </div>
+
+    <script>
+        function loadPage(page) {
+            let content = {
+                "dashboard": "<h3>Dashboard</h3><p>Overview of system performance.</p>",
+                "users": "<h3>Manage Users</h3><p>View and edit user information.</p>",
+                "settings": "<h3>Settings</h3><p>Configure system settings.</p>"
+            };
+            document.getElementById("content-area").innerHTML = content[page] || "<h3>Page Not Found</h3>";
+        }
+        function logout() {
+            alert("Logging out...");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
