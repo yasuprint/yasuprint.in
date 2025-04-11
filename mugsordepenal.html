@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel - Mug Orders</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .order-card {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 15px 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .order-card img {
+      max-width: 100px;
+      display: block;
+      margin-top: 10px;
+    }
+    .order-text {
+      font-weight: bold;
+    }
+    .no-orders {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📦 All Mug Orders (Admin Panel)</h1>
+  <div id="ordersContainer"></div>
+
+  <script>
+    const orders = JSON.parse(localStorage.getItem("mugOrders")) || [];
+    const container = document.getElementById("ordersContainer");
+
+    if (orders.length === 0) {
+      container.innerHTML = '<p class="no-orders">😔 No orders yet.</p>';
+    } else {
+      orders.reverse().forEach((order, index) => {
+        const card = document.createElement("div");
+        card.className = "order-card";
+        card.innerHTML = `
+          <p><strong>Order #${orders.length - index}</strong></p>
+          <p><strong>Name:</strong> ${order.name}</p>
+          <p><strong>Mobile:</strong> ${order.mobile}</p>
+          <p><strong>Address:</strong> ${order.address}</p>
+          <p><strong>Text:</strong> <span class="order-text" style="color: ${order.color};">${order.customText}</span></p>
+          ${order.uploadedImageSrc ? `<img src="${order.uploadedImageSrc}" alt="Uploaded Image"/>` : ""}
+          <p><small><strong>Ordered At:</strong> ${order.date}</small></p>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
